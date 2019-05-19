@@ -1,0 +1,13 @@
+配置开发环境:
+    ☐ 从 https://gitee.com/Wander_Wang/mygameengine 处将如下文件拷贝到你的项目中
+        ☐ package.json
+        ☐ tsconfig.json
+        ☐ index.html
+        ☐ webpack.config.js
+        ☐ src/index.ts
+        ☐ .gitignore
+    ☐ 在控制台执行 npm install cnpm -g （ 网速慢的话比较慢）
+    ☐ 在控制台执行 cnpm install （大约10秒）
+    ☐ 在控制台执行 cnpm run dev
+    ☐ 执行后打开 http://localhost:8080/ ，可以看到 HelloWorld
+    ☐ 成功后提交代码，【注意】，提交数量如果是 5000+，请查看是否添加了 .gitignore

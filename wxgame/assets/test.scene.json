@@ -1,0 +1,42 @@
+{
+	"id": "Scene",
+	"children": [
+		{
+			"id": "UIRoot",
+			"children": [
+				{
+					"children": [],
+					"scripts": [
+						{
+							"scriptName": "Transform",
+							"x": 0,
+							"y": 0,
+							"rotation": 0
+						},
+						{
+							"scriptName": "TextRenderer",
+							"text": "HelloWorld",
+							"fontSize": 24
+						}
+					]
+				}
+			],
+			"scripts": [
+				{
+					"scriptName": "Transform",
+					"x": 242,
+					"y": 0,
+					"rotation": 0
+				}
+			]
+		}
+	],
+	"scripts": [
+		{
+			"scriptName": "Transform",
+			"x": 0,
+			"y": 0,
+			"rotation": 0
+		}
+	]
+}
