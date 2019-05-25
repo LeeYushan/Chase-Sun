@@ -6,6 +6,10 @@ import { ItemLayerBehaviour, UseItemCommand } from "./item";
 import { NpcBehaviour } from "./npc";
 import { TileMapRenderer } from "./tilemap";
 import { user } from "./user";
+import { Slider } from "./game/Slider";
+import { Menu } from "./game/Menu";
+import { UpdateScoreBehaviour } from "./game/UpdateScoreBehaviour";
+import { GamePlayBehaviour } from "./game/GamePlayBehaviour";
 
 export class WalkableBehaviour extends Behaviour {
 
@@ -131,7 +135,7 @@ class TalkCommand extends CommandBase {
         uiRoot.getScript(HitTestScript).onClick = () => {
             uiRoot.removeChild(ui);
             this.onFinished();
-        };
+        }
         uiRoot.addChild(ui);
         this.ui = ui;
     }
@@ -203,13 +207,46 @@ export class TopUIBehaviour extends Behaviour {
     }
 }
 
+class Character extends Behaviour{
+    private speed;
+    protected onStart() 
+    {
+        
+    }    
+    
+    protected onUpdate(advancedTime: number) {
+        
+    }
+
+    public getCharacterSpeed():number{
+        return this.speed;
+    }
+
+    public setCharacterSpeed(speed:number){
+        this.speed=speed;
+    }
+}
+
+class SceneFollow extends Behaviour{
+    protected onStart() {
+        throw new Error("Method not implemented.");
+    }    
+    
+    protected onUpdate(advancedTime: number) {
+        throw new Error("Method not implemented.");
+    }
+}
+
 registerScript(TileMapRenderer);
 registerScript(MainRoleBehaviour);
 registerScript(WalkableBehaviour);
 registerScript(NpcBehaviour);
 registerScript(ItemLayerBehaviour);
-registerScript(TopUIBehaviour)
-
+registerScript(TopUIBehaviour);
+registerScript(Slider);
+registerScript(Menu);
+registerScript(UpdateScoreBehaviour);
+registerScript(GamePlayBehaviour);
 
 core.loadImage("assets/icon.jpg");
 core.loadImage("assets/font.png");
@@ -217,12 +254,14 @@ core.loadImage("assets/0.png");
 core.loadImage("assets/1.png");
 core.loadImage("assets/item1.png");
 core.loadImage("assets/item2.png");
-core.loadImage("assets/enermy.jpg");
-core.loadImage("assets/conversation.png");
+core.loadImage("assets/scene.png");
+core.loadImage("assets/kuafu.png");
+core.loadImage("assets/sun.png");
+
 
 core.start();
 
 if (!isEditorMode()) {
-    core.loadScene('assets/game.scene.json')
+    core.loadScene('assets/menu.scene.json')
 }
 

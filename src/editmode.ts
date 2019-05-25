@@ -1,4 +1,4 @@
-import { core } from "./gameengine";
+import { core, getScriptsName, createScript } from "./gameengine";
 import { GameObject, Behaviour, Transform, getGameObjectById, createDataFromGameObject } from "./gameengine";
 
 export class EditorAPI {
@@ -20,6 +20,24 @@ export class EditorAPI {
 
     }
 
+    addGameObject(){
+        const container = core.stage.children[0];
+        const gameObject = new GameObject();
+        const transform = new Transform();
+        gameObject.addScript(transform);
+        container.addChild(gameObject);
+    }
+
+    addScript(gameObjectUUID:string,scriptName:string){
+        const container = core.stage.children[0];
+        const script = createScript({scriptName:scriptName})
+        container.addScript(script);
+    }
+
+    getScriptsList(){
+        return getScriptsName();
+    }
+
     setScriptProperty(scriptUUID: string, property: { name: string, value: any }) {
         const script = this.scriptsUUIDMap[scriptUUID];
         script[property.name] = property.value;
@@ -28,25 +46,31 @@ export class EditorAPI {
     nofityListener() {
         if (this.listener) {
             const result = this.getInfo();
+            console.log(result)
             this.listener(result);
         }
     }
 
+    currentSceneFilePath:string;
+
     changeScene(sceneUrl:string) {
+        this.currentSceneFilePath = sceneUrl;
         core.loadScene(sceneUrl);
     }
 
 
     private getInfo() {
         const scriptsUUIDMap = this.scriptsUUIDMap;
-        let uuId = 0;
+        let gameObjectUUID = 0;
+        let scriptUUID = 0;
         function getGameObjectInfo(gameObject: GameObject) {
-            const name = gameObject.id || "Unnamed";
+            gameObjectUUID++;
+            const name = gameObject.id ? gameObject.id +"."+ gameObjectUUID : "Unnamed." + gameObjectUUID;
             const children = gameObject.children.map(child => getGameObjectInfo(child));
-
+          
             const scripts = gameObject._scripts.map(script => {
-                uuId++;
-                scriptsUUIDMap[uuId] = script;
+                scriptUUID++;
+                scriptsUUIDMap[scriptUUID] = script;
                 const properties = []
                 const serilizeableKeys = script['__proto__'].serilizeableKeys;
                 if (serilizeableKeys) {
@@ -64,10 +88,10 @@ export class EditorAPI {
 
 
                 return {
-                    name: script.name, properties, uuId
+                    name: script.name, properties, uuId: scriptUUID
                 }
             })
-            return { name, children, scripts }
+            return { name, children, scripts,uuId:gameObjectUUID }
         }
         return getGameObjectInfo(core.stage);
 

@@ -65,7 +65,7 @@
 						},
 						{
 							"scriptName": "SpriteRenderer",
-							"imageName": "assets/enermy.jpg"
+							"imageName": "assets/icon.jpg"
 						},
 						{
 							"scriptName": "WalkableBehaviour"

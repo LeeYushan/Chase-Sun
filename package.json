@@ -7,7 +7,7 @@
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
-    "wxgame": "webpack --config webpack.wxgame.config.js"
+    "wxgame":"webpack --config webpack.wxgame.config.js"
   },
   "author": "",
   "license": "ISC",

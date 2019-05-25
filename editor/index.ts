@@ -1,7 +1,13 @@
 import { Hierarchy } from "./Hierarchy";
 import { Inspector } from "./Inspector";
 import GoldenLayout from 'golden-layout';
+import { AssetsLibrary } from "./AssetsLibrary";
 let editorAPI
+
+export function getCurrentSceneFilePath(){
+    return 'assets/game.scene.json';
+}
+
 
 function getEditorAPIAsync(callback) {
     const gameIFrame = document.getElementById("game") as HTMLIFrameElement;
@@ -16,13 +22,22 @@ function getEditorAPIAsync(callback) {
     }
 }
 
-export function getEditorAPI() {
+
+/**
+ * 这里是用来让 getEditorAPI 可以进行类型检查，代码提示
+ * 不要去研究这个语法是什么意思，就当没看见
+ * 王泽
+ */
+type Type_EditorAPI = InstanceType<typeof import('../src/editmode')['EditorAPI']>
+
+export function getEditorAPI():Type_EditorAPI {
     return editorAPI;
 }
 
 export type Property = { name: string, createPropertyEditor: Function };
 
 export type NodeInfo = {
+    uuId:string,
     name: string,
     children: NodeInfo[],
     scripts: { uuId: string, name: string, properties: Property[] }[]
@@ -34,6 +49,8 @@ export class EditorCore {
     hierarchy = new Hierarchy();
 
     inspector = new Inspector();
+
+    assets = new AssetsLibrary();
 
     private listenerOnSelectNode = [];
 
@@ -50,39 +67,51 @@ export class EditorCore {
     create() {
         this.hierarchy.initView();
         this.inspector.initView();
+        this.assets.initView();
     }
 }
 
 export const editorCore = new EditorCore();
 
+const rows = {
+    type: 'row',
+    height:300,
+    content: [
+        {
+            type: 'component',
+            componentName: 'hierarchy',
+            width:100
+        },
+        {
+            type: 'component',
+            componentName: 'scene',
+            width: 300
+        },
+        {
+            type: 'component',
+            componentName: 'inspector',
+            width:100
+        }
+    ]
+}
 
-var config = {
-    content: [{
-        type: 'row',
-        content: [
-            {
-                type: 'component',
-                componentName: 'hierarchy',
-                componentState: { text: 'Component 1' },
-                width:100
-            },
-            {
-                type: 'component',
-                componentName: 'scene',
-                componentState: { text: 'Component 2' },
-                width: 300
-            },
-            {
-                type: 'component',
-                componentName: 'inspector',
-                componentState: { text: 'Component 3' },
-                width:100
-            }
-        ]
-    }
+const config = {
+    content: [
+        {
+            type:"column",
+            content:[
+                rows,
+                {
+                    type: 'component',
+                    componentName: 'assetslibrary',
+                    height:100
+                }
+            ]
+        }
+       
 ]
 };
-var myLayout = new GoldenLayout(config);
+const myLayout = new GoldenLayout(config);
 myLayout.init();
 myLayout.registerComponent('hierarchy', function (container, componentState) {
     container.getElement().html(`
@@ -100,11 +129,17 @@ myLayout.registerComponent('scene', function (container, componentState) {
     <iframe frameborder="0" id="game" src="http://localhost:8080/?editorMode=1" width="640" height="640"></iframe>
     ` );
 });
+myLayout.registerComponent('assetslibrary', function (container, componentState) {
+    container.getElement().html(`
+    <div id="assetslibrary"></div>
+    ` );
+});
 
 
 setTimeout(()=>{
     getEditorAPIAsync(() => {
-        editorAPI.changeScene('game.scene.json');
+        // const currentSceneFilePath = getCurrentSceneFilePath();
+        // editorAPI.changeScene(currentSceneFilePath);
         editorCore.create();
     })
 },100)

@@ -410,6 +410,21 @@ var EditorAPI = /** @class */ (function () {
         var content = JSON.stringify(jsonData, null, '\t');
         return content;
     };
+    EditorAPI.prototype.addGameObject = function () {
+        var container = gameengine_1.core.stage.children[0];
+        var gameObject = new gameengine_2.GameObject();
+        var transform = new gameengine_2.Transform();
+        gameObject.addScript(transform);
+        container.addChild(gameObject);
+    };
+    EditorAPI.prototype.addScript = function (gameObjectUUID, scriptName) {
+        var container = gameengine_1.core.stage.children[0];
+        var script = gameengine_1.createScript({ scriptName: scriptName });
+        container.addScript(script);
+    };
+    EditorAPI.prototype.getScriptsList = function () {
+        return gameengine_1.getScriptsName();
+    };
     EditorAPI.prototype.setScriptProperty = function (scriptUUID, property) {
         var script = this.scriptsUUIDMap[scriptUUID];
         script[property.name] = property.value;
@@ -417,21 +432,25 @@ var EditorAPI = /** @class */ (function () {
     EditorAPI.prototype.nofityListener = function () {
         if (this.listener) {
             var result = this.getInfo();
+            console.log(result);
             this.listener(result);
         }
     };
     EditorAPI.prototype.changeScene = function (sceneUrl) {
+        this.currentSceneFilePath = sceneUrl;
         gameengine_1.core.loadScene(sceneUrl);
     };
     EditorAPI.prototype.getInfo = function () {
         var scriptsUUIDMap = this.scriptsUUIDMap;
-        var uuId = 0;
+        var gameObjectUUID = 0;
+        var scriptUUID = 0;
         function getGameObjectInfo(gameObject) {
-            var name = gameObject.id || "Unnamed";
+            gameObjectUUID++;
+            var name = gameObject.id ? gameObject.id + "." + gameObjectUUID : "Unnamed." + gameObjectUUID;
             var children = gameObject.children.map(function (child) { return getGameObjectInfo(child); });
             var scripts = gameObject._scripts.map(function (script) {
-                uuId++;
-                scriptsUUIDMap[uuId] = script;
+                scriptUUID++;
+                scriptsUUIDMap[scriptUUID] = script;
                 var properties = [];
                 var serilizeableKeys = script['__proto__'].serilizeableKeys;
                 if (serilizeableKeys) {
@@ -450,10 +469,10 @@ var EditorAPI = /** @class */ (function () {
                     }
                 }
                 return {
-                    name: script.name, properties: properties, uuId: uuId
+                    name: script.name, properties: properties, uuId: scriptUUID
                 };
             });
-            return { name: name, children: children, scripts: scripts };
+            return { name: name, children: children, scripts: scripts, uuId: gameObjectUUID };
         }
         return getGameObjectInfo(gameengine_1.core.stage);
     };
@@ -461,6 +480,470 @@ var EditorAPI = /** @class */ (function () {
 }());
 exports.EditorAPI = EditorAPI;
 exports.editorAPI = new EditorAPI();
+
+
+/***/ }),
+
+/***/ "./src/game/Collider.ts":
+/*!******************************!*\
+  !*** ./src/game/Collider.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+var FALL_TIME = 4000;
+var MISTAKE_TIME = 1000;
+var Collider = /** @class */ (function (_super) {
+    __extends(Collider, _super);
+    function Collider() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.appearTime = 0;
+        _this.speedRate = 1;
+        _this.sizeTime = 4000;
+        _this.state = "waiting";
+        _this.duringTime = 0;
+        return _this;
+    }
+    Collider.prototype.changeState = function (state) {
+        if (this.state != state) {
+            this.state = state;
+            this.onChangeState(state);
+        }
+    };
+    Collider.prototype.onChangeState = function (to) {
+        console.log('碰撞体切换为', to);
+    };
+    Collider.prototype.onStart = function () {
+    };
+    Collider.prototype.onUpdate = function (advancedTime) {
+        this.duringTime += advancedTime;
+        if (this.state === 'waiting') {
+            if (this.duringTime >= this.appearTime + FALL_TIME) {
+                this.changeState("touchable");
+            }
+        }
+        else if (this.state === 'touchable') {
+            if (this.duringTime >= this.appearTime + FALL_TIME + MISTAKE_TIME) {
+                this.changeState("missing");
+            }
+        }
+        else if (this.state === 'touching-cannot-release') {
+            if (this.duringTime >= this.appearTime + FALL_TIME + this.sizeTime) {
+                this.changeState('touching-can-release');
+            }
+        }
+    };
+    Collider.prototype.isMatch = function (time) {
+        if (time >= this.appearTime + FALL_TIME &&
+            time <= this.appearTime + FALL_TIME + MISTAKE_TIME) {
+            console.log('match!!!!');
+            return true;
+        }
+        {
+            return false;
+        }
+    };
+    return Collider;
+}(gameengine_1.Behaviour));
+exports.Collider = Collider;
+
+
+/***/ }),
+
+/***/ "./src/game/GamePlayBehaviour.ts":
+/*!***************************************!*\
+  !*** ./src/game/GamePlayBehaviour.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+var user_1 = __webpack_require__(/*! ../user */ "./src/user.ts");
+var utils_1 = __webpack_require__(/*! ./utils */ "./src/game/utils.ts");
+var platform_1 = __webpack_require__(/*! ../platform */ "./src/platform.ts");
+var Collider_1 = __webpack_require__(/*! ./Collider */ "./src/game/Collider.ts");
+var GamePlayBehaviour = /** @class */ (function (_super) {
+    __extends(GamePlayBehaviour, _super);
+    function GamePlayBehaviour() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.duringTime = 0;
+        _this.state = "up";
+        _this.currentTouchId = -1;
+        _this.gameObjects = [];
+        return _this;
+    }
+    GamePlayBehaviour.prototype.onStart = function () {
+        var _this = this;
+        var gameObject = utils_1.createContainer();
+        var collider = new Collider_1.Collider();
+        gameObject.addScript(collider);
+        this.gameObjects.push(gameObject);
+        this.displayObject.addChild(gameObject);
+        platform_1.getPlatform().listenTouch(function (event) {
+            if (event.type === 'touchstart') {
+                if (_this.currentTouchId == -1) {
+                    _this.changeState("down");
+                    _this.currentTouchId = event.touchId;
+                }
+            }
+            else if (event.type === 'touchend') {
+                if (_this.currentTouchId === event.touchId) {
+                    _this.changeState("up");
+                    _this.currentTouchId = -1;
+                }
+            }
+        });
+    };
+    GamePlayBehaviour.prototype.onStateChanged = function (to) {
+        console.log('按键切换为', to);
+        var gameObjects = this.gameObjects;
+        var first = gameObjects[0].getScript(Collider_1.Collider);
+        if (to === 'down') {
+            if (first.state === 'waiting') {
+                console.log('什么也没发生');
+            }
+            else if (first.state === 'touchable') {
+                first.changeState('touching-cannot-release');
+            }
+        }
+        else if (to === 'up') {
+            if (first.state === "touching-cannot-release") {
+                first.changeState('touched-fail');
+            }
+            else if (first.state === 'touching-can-release') {
+                first.changeState('touched-success');
+            }
+        }
+    };
+    GamePlayBehaviour.prototype.changeState = function (state) {
+        if (this.state != state) {
+            this.state = state;
+            this.onStateChanged(state);
+        }
+    };
+    GamePlayBehaviour.prototype.onUpdate = function (advancedTime) {
+        this.duringTime += advancedTime;
+        user_1.user.score = this.duringTime;
+    };
+    return GamePlayBehaviour;
+}(gameengine_1.Behaviour));
+exports.GamePlayBehaviour = GamePlayBehaviour;
+
+
+/***/ }),
+
+/***/ "./src/game/Menu.ts":
+/*!**************************!*\
+  !*** ./src/game/Menu.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+var Slider_1 = __webpack_require__(/*! ./Slider */ "./src/game/Slider.ts");
+var utils_1 = __webpack_require__(/*! ./utils */ "./src/game/utils.ts");
+var Menu = /** @class */ (function (_super) {
+    __extends(Menu, _super);
+    function Menu() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Menu.prototype.onStart = function () {
+        var slider = this.displayObject.getScript(Slider_1.Slider);
+        slider.onCreateItemRenderer = function (data) {
+            return utils_1.createBitmap(data.imageName);
+        };
+        slider.datas = [
+            { imageName: 'assets/item1.png' },
+            { imageName: 'assets/item1.png' },
+            { imageName: 'assets/item1.png' }
+        ];
+        slider.onSelect = function (data) {
+            gameengine_1.core.loadScene("assets/main.scene.json");
+        };
+        slider.iconWidth = slider.iconHeight = 64;
+    };
+    Menu.prototype.onUpdate = function (advancedTime) {
+    };
+    return Menu;
+}(gameengine_1.Behaviour));
+exports.Menu = Menu;
+
+
+/***/ }),
+
+/***/ "./src/game/MoveBehaviour.ts":
+/*!***********************************!*\
+  !*** ./src/game/MoveBehaviour.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+var MoveBehaviour = /** @class */ (function (_super) {
+    __extends(MoveBehaviour, _super);
+    function MoveBehaviour() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.duration = 500;
+        _this.targetY = 0;
+        _this.duringTime = 0;
+        _this.startY = 0;
+        return _this;
+    }
+    MoveBehaviour.prototype.onStart = function () {
+        var transform = this.displayObject.getScript(gameengine_1.Transform);
+        this.startY = transform.y;
+    };
+    MoveBehaviour.prototype.onUpdate = function (advancedTime) {
+        function ease(x) {
+            return -(x - 1) * (x - 1) + 1;
+        }
+        this.duringTime += advancedTime;
+        var timeRate = this.duringTime / this.duration;
+        if (timeRate > 1) {
+            timeRate = 1;
+        }
+        timeRate = ease(timeRate);
+        var transform = this.displayObject.getScript(gameengine_1.Transform);
+        transform.y = this.targetY * timeRate + this.startY;
+        if (timeRate >= 1) {
+            this.displayObject.removeScript(this);
+        }
+    };
+    return MoveBehaviour;
+}(gameengine_1.Behaviour));
+exports.MoveBehaviour = MoveBehaviour;
+
+
+/***/ }),
+
+/***/ "./src/game/Slider.ts":
+/*!****************************!*\
+  !*** ./src/game/Slider.ts ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+var MoveBehaviour_1 = __webpack_require__(/*! ./MoveBehaviour */ "./src/game/MoveBehaviour.ts");
+var utils_1 = __webpack_require__(/*! ./utils */ "./src/game/utils.ts");
+var Slider = /** @class */ (function (_super) {
+    __extends(Slider, _super);
+    function Slider() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.contentWidth = 0;
+        _this.contentHeight = 0;
+        return _this;
+    }
+    Slider.prototype.onStart = function () {
+        var _this = this;
+        var container = utils_1.createContainer();
+        var clipRenderer = new gameengine_1.ClipRenderer();
+        clipRenderer.contentWidth = this.contentWidth;
+        clipRenderer.contentHeight = this.contentHeight;
+        this.displayObject.addScript(clipRenderer);
+        this.displayObject.addChild(container);
+        var iconX = (this.contentWidth - this.iconWidth) / 2;
+        var iconY = (this.contentHeight - this.iconHeight) / 2;
+        var index = 0;
+        var _loop_1 = function (icon) {
+            var iconGameObject = this_1.onCreateItemRenderer(icon);
+            var iconTransform = iconGameObject.getScript(gameengine_1.Transform);
+            iconTransform.x = iconX;
+            iconTransform.y = iconY + this_1.contentHeight * index;
+            container.addChild(iconGameObject);
+            var hitTest_1 = iconGameObject.getScript(gameengine_1.HitTestScript);
+            hitTest_1.onClick = function () {
+                if (_this.onSelect) {
+                    _this.onSelect(icon);
+                }
+                return true;
+            };
+            index++;
+        };
+        var this_1 = this;
+        for (var _i = 0, _a = this.datas; _i < _a.length; _i++) {
+            var icon = _a[_i];
+            _loop_1(icon);
+        }
+        var hitTest = this.displayObject.getScript(gameengine_1.HitTestScript);
+        hitTest.onClick = function () {
+            var move = new MoveBehaviour_1.MoveBehaviour();
+            move.targetY = -_this.contentHeight;
+            container.addScript(move);
+        };
+    };
+    Slider.prototype.onUpdate = function () { };
+    __decorate([
+        gameengine_1.SerilizeField(gameengine_1.propertyEditor_Number)
+    ], Slider.prototype, "contentWidth", void 0);
+    __decorate([
+        gameengine_1.SerilizeField(gameengine_1.propertyEditor_Number)
+    ], Slider.prototype, "contentHeight", void 0);
+    return Slider;
+}(gameengine_1.Behaviour));
+exports.Slider = Slider;
+
+
+/***/ }),
+
+/***/ "./src/game/UpdateScoreBehaviour.ts":
+/*!******************************************!*\
+  !*** ./src/game/UpdateScoreBehaviour.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+var user_1 = __webpack_require__(/*! ../user */ "./src/user.ts");
+var UpdateScoreBehaviour = /** @class */ (function (_super) {
+    __extends(UpdateScoreBehaviour, _super);
+    function UpdateScoreBehaviour() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UpdateScoreBehaviour.prototype.onStart = function () {
+    };
+    UpdateScoreBehaviour.prototype.onUpdate = function (advancedTime) {
+        var text = this.displayObject.getScript(gameengine_1.TextRenderer);
+        text.text = user_1.user.score.toString();
+    };
+    return UpdateScoreBehaviour;
+}(gameengine_1.Behaviour));
+exports.UpdateScoreBehaviour = UpdateScoreBehaviour;
+
+
+/***/ }),
+
+/***/ "./src/game/utils.ts":
+/*!***************************!*\
+  !*** ./src/game/utils.ts ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameengine_1 = __webpack_require__(/*! ../gameengine */ "./src/gameengine.ts");
+function createBitmap(url) {
+    var gameObject = new gameengine_1.GameObject();
+    var transform = new gameengine_1.Transform();
+    gameObject.addScript(transform);
+    var spriteRenderer = new gameengine_1.SpriteRenderer();
+    gameObject.addScript(spriteRenderer);
+    spriteRenderer.imageName = url;
+    return gameObject;
+}
+exports.createBitmap = createBitmap;
+function createContainer() {
+    var gameObject = new gameengine_1.GameObject();
+    var transform = new gameengine_1.Transform();
+    gameObject.addScript(transform);
+    return gameObject;
+}
+exports.createContainer = createContainer;
 
 
 /***/ }),
@@ -552,9 +1035,26 @@ exports.SerilizeField = function (propertyEditorFactory) { return function (targ
 }; };
 var Behaviour = /** @class */ (function () {
     function Behaviour() {
+        this.isStart = false;
         this.name = this.constructor.name;
     }
+    Behaviour.prototype.onEnd = function () {
+    };
     Behaviour.prototype.onEditorUpdate = function () {
+    };
+    Behaviour.prototype.editorUpdate = function () {
+        if (!this.isStart) {
+            this.isStart = true;
+            this.onStart();
+        }
+        this.onEditorUpdate();
+    };
+    Behaviour.prototype.update = function (advancedTime) {
+        if (!this.isStart) {
+            this.isStart = true;
+            this.onStart();
+        }
+        this.onUpdate(advancedTime);
     };
     return Behaviour;
 }());
@@ -566,12 +1066,20 @@ var RenderableBehaviour = /** @class */ (function (_super) {
     }
     RenderableBehaviour.prototype.onRender = function (context) {
     };
+    RenderableBehaviour.prototype.onAfterRender = function (context) {
+    };
     RenderableBehaviour.prototype.getRenderArea = function () {
         return null;
     };
     return RenderableBehaviour;
 }(Behaviour));
 exports.RenderableBehaviour = RenderableBehaviour;
+var TouchInput = /** @class */ (function () {
+    function TouchInput() {
+    }
+    return TouchInput;
+}());
+exports.TouchInput = TouchInput;
 var GameObject = /** @class */ (function () {
     function GameObject(isStage) {
         if (isStage === void 0) { isStage = false; }
@@ -597,7 +1105,13 @@ var GameObject = /** @class */ (function () {
     GameObject.prototype.addScript = function (script) {
         script.displayObject = this;
         this._scripts.push(script);
-        script.onStart();
+    };
+    GameObject.prototype.removeScript = function (script) {
+        var index = this._scripts.indexOf(script);
+        if (index >= 0) {
+            this._scripts.splice(index);
+            script.onEnd();
+        }
     };
     /**
      * T 是一个泛型
@@ -611,20 +1125,20 @@ var GameObject = /** @class */ (function () {
         }
         return null;
     };
-    GameObject.prototype.onUpdate = function () {
+    GameObject.prototype.onUpdate = function (advancedTime) {
         for (var _i = 0, _a = this._scripts; _i < _a.length; _i++) {
             var script = _a[_i];
-            script.onUpdate();
+            script.update(advancedTime);
         }
         for (var _b = 0, _c = this.children; _b < _c.length; _b++) {
             var child = _c[_b];
-            child.onUpdate();
+            child.onUpdate(advancedTime);
         }
     };
     GameObject.prototype.onEditorUpdate = function () {
         for (var _i = 0, _a = this._scripts; _i < _a.length; _i++) {
             var script = _a[_i];
-            script.onEditorUpdate();
+            script.editorUpdate();
         }
         for (var _b = 0, _c = this.children; _b < _c.length; _b++) {
             var child = _c[_b];
@@ -645,10 +1159,40 @@ var GameObject = /** @class */ (function () {
             var child = _a[_i];
             child.draw(context);
         }
+        if (this.renderNode) {
+            this.renderNode.onAfterRender(context);
+        }
     };
     return GameObject;
 }());
 exports.GameObject = GameObject;
+var ClipRenderer = /** @class */ (function (_super) {
+    __extends(ClipRenderer, _super);
+    function ClipRenderer() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.contentWidth = 0;
+        _this.contentHeight = 0;
+        return _this;
+    }
+    ClipRenderer.prototype.onStart = function () {
+        this.displayObject.renderNode = this;
+    };
+    ClipRenderer.prototype.onUpdate = function (advancedTime) {
+    };
+    ClipRenderer.prototype.getRenderArea = function () {
+        return { x: 0, y: 0, width: this.contentWidth, height: this.contentHeight };
+    };
+    ClipRenderer.prototype.onRender = function (context) {
+        context.save();
+        context.rect(0, 0, this.contentWidth, this.contentHeight);
+        context.clip();
+    };
+    ClipRenderer.prototype.onAfterRender = function (context) {
+        context.restore();
+    };
+    return ClipRenderer;
+}(RenderableBehaviour));
+exports.ClipRenderer = ClipRenderer;
 var SpriteRenderer = /** @class */ (function (_super) {
     __extends(SpriteRenderer, _super);
     function SpriteRenderer() {
@@ -722,6 +1266,7 @@ exports.getImage = getImage;
 var GameEngineCore = /** @class */ (function () {
     function GameEngineCore() {
         this.stage = new GameObject(true);
+        this.lastTime = 0;
         this.canvas = platform_1.getPlatform().getMainCanvas();
         this.context = this.canvas.getContext("2d");
         this.stage.addScript(new Transform());
@@ -752,23 +1297,28 @@ var GameEngineCore = /** @class */ (function () {
     };
     GameEngineCore.prototype.start = function () {
         var _this = this;
-        this.executeFrame();
-        platform_1.getPlatform().listenTouchEvent(function (clickX, clickY) {
+        this.executeFrame(0);
+        platform_1.getPlatform().listenClick(function (clickX, clickY) {
             var hitTestScript = _this.stage.getScript(HitTestScript);
             var hitTestDisplayObject = hitTestScript.hitTest(clickX, clickY);
             var displayObject = hitTestDisplayObject;
             while (displayObject) {
                 var hitTestScript_1 = displayObject.getScript(HitTestScript);
                 if (hitTestScript_1 && hitTestScript_1.onClick) {
-                    hitTestScript_1.onClick(hitTestScript_1.clickLocalX, hitTestScript_1.clickLocalY);
+                    var isStop = hitTestScript_1.onClick(hitTestScript_1.clickLocalX, hitTestScript_1.clickLocalY);
+                    if (isStop) {
+                        break;
+                    }
                 }
                 displayObject = displayObject.parent;
             }
         });
     };
-    GameEngineCore.prototype.executeFrame = function () {
+    GameEngineCore.prototype.executeFrame = function (duringTime) {
+        var advancedTime = duringTime - this.lastTime;
+        this.lastTime = duringTime;
         requestAnimationFrame(this.executeFrame.bind(this));
-        this.update();
+        this.update(advancedTime);
     };
     /**
      * 游戏引擎心跳控制
@@ -776,9 +1326,9 @@ var GameEngineCore = /** @class */ (function () {
      * - 执行用户逻辑
      * - 执行渲染
      */
-    GameEngineCore.prototype.update = function () {
+    GameEngineCore.prototype.update = function (advancedTime) {
         this.clearScreen();
-        this.executeUserLogic();
+        this.executeUserLogic(advancedTime);
         this.drawRenderList();
     };
     GameEngineCore.prototype.clearScreen = function () {
@@ -789,12 +1339,12 @@ var GameEngineCore = /** @class */ (function () {
         this.stage.draw(this.context);
         this.context.restore();
     };
-    GameEngineCore.prototype.executeUserLogic = function () {
+    GameEngineCore.prototype.executeUserLogic = function (advancedTime) {
         if (isEditorMode()) {
             this.stage.onEditorUpdate();
         }
         else {
-            this.stage.onUpdate();
+            this.stage.onUpdate(advancedTime);
         }
     };
     return GameEngineCore;
@@ -882,12 +1432,21 @@ function registerScript(scriptClass) {
     scriptMap[scriptClass.name] = scriptClass;
 }
 exports.registerScript = registerScript;
+function getScriptsName() {
+    var result = [];
+    for (var key in scriptMap) {
+        result.push(key);
+    }
+    return result;
+}
+exports.getScriptsName = getScriptsName;
 function createScript(data) {
     var scriptName = data.scriptName;
     var clz = scriptMap[scriptName];
     var script = new clz();
     return script;
 }
+exports.createScript = createScript;
 console.log('before Transform');
 var Transform = /** @class */ (function (_super) {
     __extends(Transform, _super);
@@ -1023,6 +1582,10 @@ var item_1 = __webpack_require__(/*! ./item */ "./src/item.ts");
 var npc_1 = __webpack_require__(/*! ./npc */ "./src/npc.ts");
 var tilemap_1 = __webpack_require__(/*! ./tilemap */ "./src/tilemap.ts");
 var user_1 = __webpack_require__(/*! ./user */ "./src/user.ts");
+var Slider_1 = __webpack_require__(/*! ./game/Slider */ "./src/game/Slider.ts");
+var Menu_1 = __webpack_require__(/*! ./game/Menu */ "./src/game/Menu.ts");
+var UpdateScoreBehaviour_1 = __webpack_require__(/*! ./game/UpdateScoreBehaviour */ "./src/game/UpdateScoreBehaviour.ts");
+var GamePlayBehaviour_1 = __webpack_require__(/*! ./game/GamePlayBehaviour */ "./src/game/GamePlayBehaviour.ts");
 var WalkableBehaviour = /** @class */ (function (_super) {
     __extends(WalkableBehaviour, _super);
     function WalkableBehaviour() {
@@ -1206,17 +1769,22 @@ gameengine_1.registerScript(WalkableBehaviour);
 gameengine_1.registerScript(npc_1.NpcBehaviour);
 gameengine_1.registerScript(item_1.ItemLayerBehaviour);
 gameengine_1.registerScript(TopUIBehaviour);
+gameengine_1.registerScript(Slider_1.Slider);
+gameengine_1.registerScript(Menu_1.Menu);
+gameengine_1.registerScript(UpdateScoreBehaviour_1.UpdateScoreBehaviour);
+gameengine_1.registerScript(GamePlayBehaviour_1.GamePlayBehaviour);
 gameengine_1.core.loadImage("assets/icon.jpg");
 gameengine_1.core.loadImage("assets/font.png");
 gameengine_1.core.loadImage("assets/0.png");
 gameengine_1.core.loadImage("assets/1.png");
 gameengine_1.core.loadImage("assets/item1.png");
 gameengine_1.core.loadImage("assets/item2.png");
-gameengine_1.core.loadImage("assets/enermy.jpg");
-gameengine_1.core.loadImage("assets/conversation.png");
+gameengine_1.core.loadImage("assets/scene.png");
+gameengine_1.core.loadImage("assets/kuafu.png");
+gameengine_1.core.loadImage("assets/sun.png");
 gameengine_1.core.start();
 if (!gameengine_1.isEditorMode()) {
-    gameengine_1.core.loadScene('assets/game.scene.json');
+    gameengine_1.core.loadScene('assets/menu.scene.json');
 }
 
 
@@ -1648,10 +2216,31 @@ var BrowserPlatform = /** @class */ (function (_super) {
     function BrowserPlatform() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    BrowserPlatform.prototype.listenTouchEvent = function (callback) {
+    BrowserPlatform.prototype.listenTouch = function (callback) {
+        var canvas = this.getMainCanvas();
+        canvas.ontouchstart = function (e) {
+            for (var i = 0; i < e.changedTouches.length; i++) {
+                var touch = e.changedTouches[i];
+                var event_1 = { clickX: touch.clientX, clickY: touch.clientY, touchId: touch.identifier, type: "touchstart" };
+                callback(event_1);
+            }
+            e.preventDefault();
+        };
+        // canvas.ontouchmove = (event) => {
+        //     callback(event)
+        // }
+        canvas.ontouchend = function (e) {
+            for (var i = 0; i < e.changedTouches.length; i++) {
+                var touch = e.changedTouches[i];
+                var event_2 = { clickX: touch.clientX, clickY: touch.clientY, touchId: touch.identifier, type: "touchend" };
+                callback(event_2);
+            }
+            e.preventDefault();
+        };
+    };
+    BrowserPlatform.prototype.listenClick = function (callback) {
         var canvas = this.getMainCanvas();
         canvas.onclick = function (e) {
-            console.log('helloworld');
             var rect = canvas.getBoundingClientRect();
             var clickX = Math.round(e.clientX - rect.left);
             var clickY = Math.round(e.clientY - rect.top);
@@ -1681,7 +2270,18 @@ var WxgamePlatform = /** @class */ (function (_super) {
         _this.scale = 1;
         return _this;
     }
-    WxgamePlatform.prototype.listenTouchEvent = function (callback) {
+    WxgamePlatform.prototype.listenTouch = function (callback) {
+        wx.onTouchStart(function (event) {
+            callback(event);
+        });
+        wx.onTouchMove(function (event) {
+            callback(event);
+        });
+        wx.onTouchEnd(function (event) {
+            callback(event);
+        });
+    };
+    WxgamePlatform.prototype.listenClick = function (callback) {
         var _this = this;
         wx.onTouchStart(function (result) {
             var touch = result.touches[0];
@@ -1699,9 +2299,13 @@ var WxgamePlatform = /** @class */ (function (_super) {
         var width = canvas.width;
         var height = canvas.height;
         var scale = width / height;
-        canvas.width = 600;
-        canvas.height = Math.floor(600 / scale);
+        // canvas.width = 1080;
+        // canvas.height = Math.floor(1080 / scale);
         this.scale = scale;
+        canvas.height = 720;
+        canvas.width = Math.floor(scale * 720);
+        var ctx = canvas.getContext("2d");
+        ctx.scale(width / canvas.width, width / canvas.width);
         return canvas;
     };
     WxgamePlatform.prototype.loadText = function (url, callback) {
@@ -1810,6 +2414,7 @@ var User = /** @class */ (function () {
         this.name = "";
         this.gold = 100;
         this.bag = [];
+        this.score = 0;
     }
     return User;
 }());

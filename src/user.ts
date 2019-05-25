@@ -7,6 +7,8 @@ export class User {
     gold: number = 100;
 
     bag: Item[] = [];
+
+    score:number = 0;
 }
 
 

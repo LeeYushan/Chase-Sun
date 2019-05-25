@@ -38,6 +38,51 @@
 				}
 			
 			]
+		},
+		{
+			"children": [],
+			"scripts": [
+				{
+					"scriptName": "Transform",
+					"x": 0,
+					"y": 0,
+					"rotation": 0
+				},
+				{
+					"scriptName": "SpriteRenderer",
+					"imageName": "assets/scene.png"
+				}
+			]
+		},
+		{
+			"children": [],
+			"scripts": [
+				{
+					"scriptName": "Transform",
+					"x": 100,
+					"y": 320,
+					"rotation": 0
+				},
+				{
+					"scriptName": "SpriteRenderer",
+					"imageName": "assets/kuafu.png"
+				}
+			]
+		},
+		{
+			"children": [],
+			"scripts": [
+				{
+					"scriptName": "Transform",
+					"x": 930,
+					"y": 40,
+					"rotation": 0
+				},
+				{
+					"scriptName": "SpriteRenderer",
+					"imageName": "assets/sun.png"
+				}
+			]
 		}
 	],
 	"scripts": [

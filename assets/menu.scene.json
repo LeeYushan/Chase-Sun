@@ -27,7 +27,16 @@
 					"x": 100,
 					"y": 0,
 					"rotation": 0
+				},
+				{
+					"scriptName":"Menu"
+				},
+				{
+					"scriptName":"Slider",
+					"contentWidth":400,
+					"contentHeight":1334
 				}
+			
 			]
 		}
 	],

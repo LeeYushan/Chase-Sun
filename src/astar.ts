@@ -186,6 +186,7 @@ export namespace astar {
                         testNode.h = h;
                         testNode.parent = currentNode;
                         openList.push(testNode);
+
                     }
                 }
                 closedList.push(currentNode);

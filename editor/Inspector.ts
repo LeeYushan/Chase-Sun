@@ -15,6 +15,7 @@ export class Inspector {
     }
 
     private updateInspector(nodeInfo: NodeInfo) {
+        console.log (nodeInfo.uuId)
         if (root) {
             gui.removeFolder(root)
         }
@@ -29,6 +30,15 @@ export class Inspector {
                 property.createPropertyEditor(host);
             }
         }
+        root.add({'添加组件':()=>{
+            console.log ('添加组件')
+           
+            const editorAPI = getEditorAPI();
+            const list = editorAPI.getScriptsList();
+            const scriptName = list[3];
+            editorAPI.addScript('1',scriptName);
+            console.log (list)
+        }},'添加组件')
     }
 }
 
@@ -46,6 +56,6 @@ class PropertyEditComponentHost {
         const editorAPI = getEditorAPI();
         editorAPI.setScriptProperty(this.scriptUUID, newProperty);
         const saveData = editorAPI.save();
-        fs.writeFileSync('game.scene.json', saveData, 'utf-8');
+        fs.writeFileSync(editorAPI.currentSceneFilePath, saveData, 'utf-8');
     }
 }

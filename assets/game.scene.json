@@ -65,7 +65,7 @@
 						},
 						{
 							"scriptName": "SpriteRenderer",
-							"imageName": "assets/enermy.jpg"
+							"imageName": "assets/icon.jpg"
 						},
 						{
 							"scriptName": "WalkableBehaviour"
@@ -146,7 +146,7 @@
 						},
 						{
 							"scriptName": "TextRenderer",
-							"text": "HelloWorld",
+							"text": "My UI",
 							"fontSize": 24
 						},
 						{

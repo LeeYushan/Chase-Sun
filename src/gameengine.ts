@@ -102,12 +102,35 @@ export abstract class Behaviour {
 
     displayObject: GameObject;
 
-    abstract onStart();
+    isStart:boolean = false;
+
+    protected abstract onStart();
+
+    onEnd() {
+
+    }
 
     onEditorUpdate() {
     }
+    
 
-    abstract onUpdate();
+    editorUpdate(){
+        if (!this.isStart){
+            this.isStart = true;
+            this.onStart();
+        }
+        this.onEditorUpdate();
+    }
+
+    update(advancedTime:number){
+        if (!this.isStart){
+            this.isStart = true;
+            this.onStart();
+        }
+        this.onUpdate(advancedTime);
+    }
+
+    protected abstract onUpdate(advancedTime: number);
 
 }
 
@@ -117,9 +140,18 @@ export abstract class RenderableBehaviour extends Behaviour {
 
     }
 
+    onAfterRender(context: CanvasRenderingContext2D) {
+
+    }
+
     getRenderArea(): { x: number, y: number, width: number, height: number } {
         return null;
     }
+
+}
+
+export class TouchInput {
+
 
 }
 
@@ -167,7 +199,14 @@ export class GameObject {
     addScript(script: Behaviour) {
         script.displayObject = this;
         this._scripts.push(script);
-        script.onStart();
+    }
+
+    removeScript(script: Behaviour) {
+        const index = this._scripts.indexOf(script);
+        if (index >= 0) {
+            this._scripts.splice(index);
+            script.onEnd();
+        }
     }
 
     /**
@@ -183,18 +222,18 @@ export class GameObject {
     }
 
 
-    onUpdate() {
+    onUpdate(advancedTime: number) {
         for (let script of this._scripts) {
-            script.onUpdate();
+            script.update(advancedTime);
         }
         for (let child of this.children) {
-            child.onUpdate();
+            child.onUpdate(advancedTime);
         }
     }
 
     onEditorUpdate() {
         for (let script of this._scripts) {
-            script.onEditorUpdate();
+            script.editorUpdate();
         }
         for (let child of this.children) {
             child.onEditorUpdate();
@@ -221,9 +260,40 @@ export class GameObject {
         for (let child of this.children) {
             child.draw(context);
         }
+        if (this.renderNode) {
+            this.renderNode.onAfterRender(context);
+        }
     }
 }
 
+export class ClipRenderer extends RenderableBehaviour {
+    
+     contentWidth:number = 0;
+     contentHeight:number = 0;
+    
+    onStart() {
+        this.displayObject.renderNode = this;
+    }
+    onUpdate(advancedTime: number) {
+
+    }
+
+    getRenderArea() {
+        return { x: 0, y: 0, width: this.contentWidth, height: this.contentHeight }
+    }
+
+    onRender(context: CanvasRenderingContext2D) {
+        context.save();
+        context.rect(0, 0, this.contentWidth, this.contentHeight);
+        context.clip();
+    }
+
+    onAfterRender(context: CanvasRenderingContext2D) {
+        context.restore();
+    }
+
+
+}
 
 
 export class SpriteRenderer extends RenderableBehaviour {
@@ -305,8 +375,11 @@ export class GameEngineCore {
     constructor() {
         this.canvas = getPlatform().getMainCanvas();
         this.context = this.canvas.getContext("2d");
-        this.stage.addScript(new Transform())
+        this.stage.addScript(new Transform());
     }
+
+
+
 
     loadImage(url: string) {
         const img = document.createElement("img");
@@ -318,12 +391,12 @@ export class GameEngineCore {
 
     loadScene(sceneUrl: string) {
 
-        getPlatform().loadText(sceneUrl,(text)=>{
+        getPlatform().loadText(sceneUrl, (text) => {
             const json = JSON.parse(text);
             this.createScene(json);
         })
 
-      
+
     }
 
     createScene(data: Data_GameObject) {
@@ -341,25 +414,32 @@ export class GameEngineCore {
     }
 
     start() {
-        this.executeFrame();
+        this.executeFrame(0);
 
-        getPlatform().listenTouchEvent((clickX:number,clickY:number)=>{
+        getPlatform().listenClick((clickX: number, clickY: number) => {
             const hitTestScript = this.stage.getScript(HitTestScript);
             const hitTestDisplayObject = hitTestScript.hitTest(clickX, clickY)
             let displayObject = hitTestDisplayObject;
             while (displayObject) {
                 const hitTestScript = displayObject.getScript(HitTestScript);
                 if (hitTestScript && hitTestScript.onClick) {
-                    hitTestScript.onClick(hitTestScript.clickLocalX, hitTestScript.clickLocalY);
+                    const isStop = hitTestScript.onClick(hitTestScript.clickLocalX, hitTestScript.clickLocalY);
+                    if (isStop){
+                        break;
+                    }
                 }
                 displayObject = displayObject.parent;
             }
         })
     }
 
-    executeFrame() {
+    private lastTime: number = 0;
+
+    executeFrame(duringTime: number) {
+        const advancedTime = duringTime - this.lastTime;
+        this.lastTime = duringTime;
         requestAnimationFrame(this.executeFrame.bind(this));
-        this.update();
+        this.update(advancedTime);
     }
 
 
@@ -370,9 +450,9 @@ export class GameEngineCore {
      * - 执行用户逻辑
      * - 执行渲染
      */
-    update() {
+    update(advancedTime: number) {
         this.clearScreen();
-        this.executeUserLogic();
+        this.executeUserLogic(advancedTime);
         this.drawRenderList();
     }
 
@@ -386,12 +466,12 @@ export class GameEngineCore {
         this.context.restore();
     }
 
-    private executeUserLogic() {
+    private executeUserLogic(advancedTime: number) {
         if (isEditorMode()) {
             this.stage.onEditorUpdate();
         }
         else {
-            this.stage.onUpdate();
+            this.stage.onUpdate(advancedTime);
         }
     }
 }
@@ -482,8 +562,15 @@ export function registerScript(scriptClass: typeof Behaviour) {
     scriptMap[scriptClass.name] = scriptClass
 }
 
+export function getScriptsName() {
+    const result = [];
+    for (let key in scriptMap) {
+        result.push(key);
+    }
+    return result;
+}
 
-function createScript(data: any): Behaviour {
+export function createScript(data: any): Behaviour {
     const scriptName = data.scriptName;
     const clz = scriptMap[scriptName];
     const script = new clz();
@@ -590,7 +677,7 @@ registerScript(TextRenderer);
 
 
 export function isEditorMode() {
-   return getPlatform().isEditorMode();
+    return getPlatform().isEditorMode();
 }
 
 window['editorAPI'] = editorAPI;

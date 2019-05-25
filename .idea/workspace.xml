@@ -1,7 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1109f05f-6b62-4651-9ed7-087afc30fea7" name="Default Changelist" comment="" />
+    <list default="true" id="1109f05f-6b62-4651-9ed7-087afc30fea7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/wxgame/assets/bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wxgame/assets/bg3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wxgame/assets/kuafu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wxgame/assets/menu.scene.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wxgame/assets/scene.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wxgame/assets/sun.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a.js" beforeDir="false" afterPath="$PROJECT_DIR$/a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game.scene.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game.scene.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/test.scene.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/test.scene.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/editor.css" beforeDir="false" afterPath="$PROJECT_DIR$/editor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/editor.html" beforeDir="false" afterPath="$PROJECT_DIR$/editor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/editor/Hierarchy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/editor/Hierarchy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/editor/Inspector.ts" beforeDir="false" afterPath="$PROJECT_DIR$/editor/Inspector.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/editor/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/editor/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules - 快捷方式.lnk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/astar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/astar.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/command.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/command.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/editmode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/editmode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index2.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index2.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/item.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/math.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/npc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/npc.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platform.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platform.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tilemap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/tilemap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.wxgame.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.wxgame.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame-architecture.md" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame-architecture.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/assets/game.scene.json" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/assets/game.scene.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/assets/test.scene.json" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/assets/test.scene.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/bundle.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/game.json" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/game.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/project.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/project.config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/test.scene.json" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/test.scene.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wxgame/weapp-adapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/wxgame/weapp-adapter.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -13,44 +62,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wxgame/assets/game.scene.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3192">
-              <caret line="168" column="9" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/platform.ts">
+        <entry file="file://$PROJECT_DIR$/wxgame/assets/menu.scene.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="87" column="1" lean-forward="true" selection-start-line="87" selection-start-column="1" selection-end-line="87" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/index.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gameengine.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11134">
-              <caret line="589" selection-start-line="589" selection-end-line="589" />
-              <folding>
-                <element signature="e#0#63#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="284">
+              <caret line="91" column="19" selection-start-line="91" selection-start-column="19" selection-end-line="91" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -63,7 +79,6 @@
       <find>renderNode</find>
       <find>RenderableBehaviour</find>
       <find>getRenderArea</find>
-      <find>hitTest</find>
       <find>createDisplayObject</find>
       <find>console.log</find>
       <find>arguments</find>
@@ -77,6 +92,8 @@
       <find>EditorApi</find>
       <find>EditorAPI</find>
       <find>editorApi</find>
+      <find>hitTest</find>
+      <find>getPlatform</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -90,21 +107,24 @@
         <option value="$PROJECT_DIR$/src/data.ts" />
         <option value="$PROJECT_DIR$/src/item.ts" />
         <option value="$PROJECT_DIR$/editor.html" />
-        <option value="$PROJECT_DIR$/src/gameengine.ts" />
         <option value="$PROJECT_DIR$/a.js" />
         <option value="$PROJECT_DIR$/game.scene.json" />
         <option value="$PROJECT_DIR$/assets/game.scene.json" />
-        <option value="$PROJECT_DIR$/src/index2.ts" />
-        <option value="$PROJECT_DIR$/src/index.ts" />
         <option value="$PROJECT_DIR$/wxgame/assets/game.scene.json" />
+        <option value="$PROJECT_DIR$/webpack.config.js" />
+        <option value="$PROJECT_DIR$/src/gameengine.ts" />
+        <option value="$PROJECT_DIR$/src/index2.ts" />
+        <option value="$PROJECT_DIR$/webpack.wxgame.config.js" />
         <option value="$PROJECT_DIR$/wxgame/game.json" />
         <option value="$PROJECT_DIR$/src/platform.ts" />
+        <option value="$PROJECT_DIR$/wxgame/assets/menu.scene.json" />
+        <option value="$PROJECT_DIR$/src/index.ts" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="421" />
-    <option name="y" value="77" />
+    <option name="x" value="617" />
+    <option name="y" value="42" />
     <option name="width" value="940" />
     <option name="height" value="1035" />
   </component>
@@ -114,7 +134,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -127,24 +146,35 @@
               <item name="ChaseSun" type="462c0819:PsiDirectoryNode" />
               <item name="wxgame" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ChaseSun" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ChaseSun" type="462c0819:PsiDirectoryNode" />
+              <item name="wxgame" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/wxgame/assets" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
-    <property name="ts.external.directory.path" value="E:\JetBrains\WebStorm 2018.3.4\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="C:\Users\hdfli\WebstormProjects\ChaseSun\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hdfli\WebstormProjects\ChaseSun\wxgame\assets" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hdfli\WebstormProjects\ChaseSun\wxgame\assets" />
       <recent name="C:\Users\hdfli\WebstormProjects\mygameengine\wxgame\assets" />
     </key>
   </component>
@@ -206,7 +236,10 @@
       <workItem from="1557887965558" duration="762000" />
       <workItem from="1558186073487" duration="10009000" />
       <workItem from="1558270670794" duration="1620000" />
-      <workItem from="1558272368602" duration="520000" />
+      <workItem from="1558272368602" duration="16714000" />
+      <workItem from="1558656262093" duration="155000" />
+      <workItem from="1558703650896" duration="7191000" />
+      <workItem from="1558747535731" duration="1283000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1558272015579</created>
@@ -219,7 +252,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108137000" />
+    <option name="totallyTimeSpent" value="132960000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -232,9 +265,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1488" height="878" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49756098" visible="true" weight="0.26928374" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49756098" visible="true" weight="0.19214876" />
       <window_info id="Structure" order="1" sideWeight="0.502439" side_tool="true" weight="0.16391185" />
       <window_info id="npm" order="2" sideWeight="0.502439" side_tool="true" weight="0.16391185" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -249,7 +281,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.4235925" />
       <window_info anchor="bottom" id="TypeScript" order="9" weight="0.3297587" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5027548" side_tool="true" weight="0.3239625" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4972452" visible="true" weight="0.35254693" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4972452" visible="true" weight="0.29758713" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -277,21 +309,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts" />
-    <entry file="file://$PROJECT_DIR$/wxgame/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-90" />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/project.config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-75">
-          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/editor/index.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1476">
@@ -354,13 +371,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/config.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -402,13 +412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/test.scene.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/a.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -425,31 +428,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wxgame/assets/enermy.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/assets/test.scene.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="43" lean-forward="true" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index2.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" selection-start-line="5" selection-end-line="22" selection-end-column="29" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/game.scene.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -458,63 +438,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="22" column="26" lean-forward="true" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game.scene.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1558">
-          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/bundle.js.map">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="sourcemapFileViewerProvider" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/wxgame/js/databus.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-321">
           <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame-architecture.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-506">
-          <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/bundle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22534">
-          <caret line="1186" column="20" selection-start-line="1186" selection-start-column="20" selection-end-line="1186" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -528,10 +455,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.wxgame.config.js">
+    <entry file="file://$PROJECT_DIR$/src/data.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+        <state relative-caret-position="209">
+          <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/bundle.js.map">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="sourcemapFileViewerProvider" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/assets/bg2.png" />
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/bundle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11061">
+          <caret line="1749" column="20" selection-start-line="1749" selection-start-column="20" selection-end-line="1749" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -542,37 +503,143 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wxgame/assets/game.scene.json">
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3192">
-          <caret line="168" column="9" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
+        <state relative-caret-position="154">
+          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.ts">
+    <entry file="file://$PROJECT_DIR$/game.scene.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="388">
+          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/assets/test.scene.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-301">
+          <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/project.config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/editor/AssetsLibrary.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-491">
+          <caret line="2" column="58" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame-architecture.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index2.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/assets/game.scene.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="35" column="17" lean-forward="true" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/test.scene.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="35" column="38" lean-forward="true" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="53" column="5" lean-forward="true" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11134">
-          <caret line="589" selection-start-line="589" selection-end-line="589" />
+        <state relative-caret-position="-2771">
+          <caret line="347" column="41" selection-start-line="347" selection-start-column="41" selection-end-line="347" selection-end-column="41" />
           <folding>
             <element signature="e#0#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/main.scene.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.wxgame.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="233" column="13" lean-forward="true" selection-start-line="233" selection-start-column="13" selection-end-line="233" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/platform.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="87" column="1" lean-forward="true" selection-start-line="87" selection-start-column="1" selection-end-line="87" selection-end-column="1" />
+        <state relative-caret-position="436">
+          <caret line="138" column="19" selection-start-line="138" selection-start-column="19" selection-end-line="138" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wxgame/assets/menu.scene.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="91" column="19" selection-start-line="91" selection-start-column="19" selection-end-line="91" selection-end-column="19" />
         </state>
       </provider>
     </entry>
