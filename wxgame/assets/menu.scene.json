@@ -1,0 +1,51 @@
+{
+	"id": "Scene",
+	"children": [
+		{
+			"id": "UIRoot",
+			"children": [
+				{
+					"children": [],
+					"scripts": [
+						{
+							"scriptName": "Transform",
+							"x": 0,
+							"y": 0,
+							"rotation": 0
+						},
+						{
+							"scriptName": "TextRenderer",
+							"text": "Hello",
+							"fontSize": 24
+						}
+					]
+				}
+			],
+			"scripts": [
+				{
+					"scriptName": "Transform",
+					"x": 100,
+					"y": 0,
+					"rotation": 0
+				},
+				{
+					"scriptName":"Menu"
+				},
+				{
+					"scriptName":"Slider",
+					"contentWidth":400,
+					"contentHeight":1334
+				}
+			
+			]
+		}
+	],
+	"scripts": [
+		{
+			"scriptName": "Transform",
+			"x": 0,
+			"y": 0,
+			"rotation": 0
+		}
+	]
+}
